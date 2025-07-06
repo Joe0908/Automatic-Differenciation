@@ -16,7 +16,7 @@ def forward_mode(x1,x2):
     dv_2 = np.cos(v_1) * dv_1
 
     v_3 = np.exp(v_0)
-    dv_3= np.exp(v_0) * v_0
+    dv_3= np.exp(v_0) * dv_0
 
     v_4 = v_1 - v_3
     dv_4 = dv_1 - dv_3
