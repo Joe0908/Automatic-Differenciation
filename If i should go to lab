@@ -1,0 +1,60 @@
+import numpy as np
+
+#Sigmoid function and its derivative
+
+def sigmoid(z):
+
+    return 1 / (1 + np.exp(-z))
+
+
+
+#Initialise weights and bias
+
+np.random.seed(42)
+w = np.random.randn(3)
+b = 0.0
+#Training data
+
+# Each row: [weather, company, motivation]
+X = np.array([
+    [0.6, 0.0, 0.9],
+    [0.3, 1.0, 0.2],
+    [0.8, 0.0, 0.7],
+    [0.2, 1.0, 0.1]
+])
+
+# Labels: 1 if go to lab, 0 otherwise
+y = np.array([1, 0, 1, 0])
+
+#Training loop (gradient descent)
+lr = 0.1
+epoches = 1000
+
+for epoch in range(epoches):
+    z = np.dot (X,w) + b
+    y_hat = sigmoid(z)
+    
+
+    loss = -np.mean(y * np.log(y_hat + 1e-8) + (1 - y) * np.log(1 - y_hat + 1e-8))
+
+    dz = y_hat - y # we compare y_hat to the real result (0 or 1)
+
+    
+    dw = np.dot(X.T,dz) / len(X)
+    # There are 4 situations, and each situation nudges the weights a bit (because its dz might be positive or negative), then we sum up all 4 contributions, average them, and that gives you the gradient for each weight
+    db = np.mean(dz)
+
+    w -= lr * dw
+    b -= lr * db
+
+    if epoch % 100 == 0 :
+        print(f"Epoch {epoch}: Loss = {loss :.4f}")
+
+#Final prediction
+
+new_x = np.array ([0.5, 0.0, 0.8])
+z_new = np.dot(new_x, w) + b
+prob = sigmoid(z_new)
+#print(w,b)
+
+print (prob)
