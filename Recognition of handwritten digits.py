@@ -50,8 +50,8 @@ class NN(object):
            random.shuffle(training_data)
            mini_batches = []
            for x in range(0,n, mini_batch_size):
-              k = 0
-              mini_batches = training_data[x:x + mini_batch_size]
+              mini_batch = training_data[x:x + mini_batch_size]
+              mini_batches.append(mini_batch)
             
            for mini_batch in mini_batches:
                self.update_mini_batch(mini_batch, lr)
